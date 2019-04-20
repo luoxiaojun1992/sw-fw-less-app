@@ -1,6 +1,6 @@
 <?php
 
-$providers = [
+return [
     //Common Providers
     \SwFwLess\components\swoole\counter\CounterProvider::class,
 
@@ -25,13 +25,3 @@ $providers = [
     //Shutdown Providers
     \SwFwLess\components\swoole\coresource\CoroutineResProvider::class,
 ];
-
-$composerInstalled = file_get_contents(__DIR__ . '/../vendor/composer/installed.json');
-$packages = json_decode($composerInstalled, true);
-foreach ($packages as $package) {
-    if (isset($package['extra']['sw-fw-less']['provider'])) {
-        array_push($providers, $package['extra']['sw-fw-less']['provider']);
-    }
-}
-
-return $providers;
