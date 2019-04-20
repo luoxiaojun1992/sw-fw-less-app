@@ -1,0 +1,7 @@
+/vendor/
+/.idea
+/.idea/
+/.env
+/runtime
+/runtime/
+/composer.lock
