@@ -1,6 +1,6 @@
 <?php
 
-$config = [
+return [
     //Cors
     'cors' => [
         'origin' => env('CORS_ORIGIN', ''),
@@ -60,18 +60,3 @@ $config = [
         },
     ],
 ];
-
-$fd = opendir(__DIR__);
-while($file = readdir($fd)) {
-    if (!in_array($file, ['.', '..', 'app.php'])) {
-        $configName = substr($file, 0, -4);
-        if (isset($config[$configName])) {
-            $config[$configName] = array_merge($config[$configName], require __DIR__ . '/' . $file);
-        } else {
-            $config[$configName] = require __DIR__ . '/' . $file;
-        }
-    }
-}
-closedir($fd);
-
-return $config;
