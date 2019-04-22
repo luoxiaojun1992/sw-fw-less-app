@@ -3,7 +3,7 @@
 return [
     'single' => [
         ['GET', '/ping', [\SwFwLess\services\DemoService::class, 'ping']],
-        ['GET', '/redis', [\SwFwLess\services\DemoService::class, 'redis', [\SwFwLess\middlewares\Cors::class]]],
+        ['GET', '/redis', [\SwFwLess\services\DemoService::class, 'redis', ['cors']]],
         ['GET', '/mysql', [\SwFwLess\services\DemoService::class, 'mysql']],
         ['GET', '/http', [\SwFwLess\services\DemoService::class, 'http']],
         ['GET', '/es', [\SwFwLess\services\DemoService::class, 'es']],
@@ -18,8 +18,8 @@ return [
     'group' => [
         '/dining' => [
             ['GET', '/menu', [\SwFwLess\services\DiningService::class, 'menu']],
-            ['GET', '/ordered', [\SwFwLess\services\DiningService::class, 'ordered', [\SwFwLess\components\auth\Middleware::class]]],
-            ['POST', '/order', [\SwFwLess\services\DiningService::class, 'order', [\SwFwLess\components\auth\Middleware::class]]],
+            ['GET', '/ordered', [\SwFwLess\services\DiningService::class, 'ordered', ['auth']]],
+            ['POST', '/order', [\SwFwLess\services\DiningService::class, 'order', ['auth']]],
             ['POST', '/login', [\SwFwLess\services\DiningService::class, 'login']],
         ],
     ],

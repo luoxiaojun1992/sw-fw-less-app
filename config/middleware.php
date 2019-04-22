@@ -10,4 +10,8 @@ return [
     'routeMiddleware' => [
         \SwFwLess\components\ratelimit\Middleware::class,
     ],
+    'aliases' => [
+        'cors' => \SwFwLess\middlewares\Cors::class,
+        'auth' => \SwFwLess\components\auth\Middleware::class,
+    ],
 ];
