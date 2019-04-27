@@ -6,6 +6,7 @@ return [
         \SwFwLess\components\chaos\Middleware::class,
         \SwFwLess\middlewares\Cors::class,
 //        \SwFwLess\components\auth\Middleware::class,
+        \SwFwLess\middlewares\IpRestriction::class,
     ],
     'routeMiddleware' => [
         \SwFwLess\components\ratelimit\Middleware::class,

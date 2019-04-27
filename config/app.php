@@ -59,4 +59,10 @@ return [
             return nl2br($e->getMessage() . PHP_EOL . $e->getTraceAsString());
         },
     ],
+
+    //Ip Restriction
+    'ip_restriction' => [
+        'ips' => [],
+        'api_prefix' => [],
+    ]
 ];
