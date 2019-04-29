@@ -62,7 +62,7 @@ return [
 
     //Ip Restriction
     'ip_restriction' => [
-        'ips' => [],
-        'api_prefix' => [],
+        'ips' => env('IP_RESTRICTION_IPS'),
+        'api_prefix' => env('IP_RESTRICTION_API_PREFIX'),
     ]
 ];
