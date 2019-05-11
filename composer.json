@@ -12,8 +12,8 @@
     "require": {
         "php": ">=7.1",
         "ext-json": "*",
-        "ext-redis": "*",
         "ext-pdo": "*",
+        "ext-redis": "*",
         "luoxiaojun/sw-fw-less": "dev-master"
     },
     "license": "apache-2.0",
@@ -24,7 +24,8 @@
         }
     ],
     "autoload": {
-        "psr-4": {"App\\": "app/"}
+        "psr-4": {"App\\": "app/"},
+        "classmap": ["app/grpc"]
     },
     "scripts": {
         "post-root-package-install": [

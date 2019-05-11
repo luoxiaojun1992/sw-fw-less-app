@@ -22,5 +22,8 @@ return [
             ['POST', '/order', [\SwFwLess\services\DiningService::class, 'order', ['auth']]],
             ['POST', '/login', [\SwFwLess\services\DiningService::class, 'login']],
         ],
+        '/helloworld' => [
+            ['POST', '.Greeter/SayHello', [\App\services\GreeterService::class, 'sayHello']],
+        ],
     ],
 ];
