@@ -16,9 +16,14 @@ class GrpcDemoService extends BaseService
         $request = new HelloRequest();
         $request->setName('ping');
         list($reply, $status) = $client->SayHello($request);
-        $data = $reply->getData();
         $client->close();
 
-        return Response::output($data);
+        if (!$status) {
+            $message = $reply->getMessage();
+            $data = $reply->getData();
+            return Response::json(compact('message', 'data'));
+        }
+
+        return Response::output('', 500);
     }
 }
