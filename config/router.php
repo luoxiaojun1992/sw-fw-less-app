@@ -14,6 +14,7 @@ return [
         ['GET', '/hbase', [\SwFwLess\services\DemoService::class, 'hbase']],
         ['GET', '/cache', [\SwFwLess\services\DemoService::class, 'cache']],
         ['GET', '/jwt', [\SwFwLess\services\DemoService::class, 'jwt']],
+        ['GET', '/grpc', [\App\services\GrpcDemoService::class, 'greeting']],
     ],
     'group' => [
         '/dining' => [
@@ -22,8 +23,8 @@ return [
             ['POST', '/order', [\SwFwLess\services\DiningService::class, 'order', ['auth']]],
             ['POST', '/login', [\SwFwLess\services\DiningService::class, 'login']],
         ],
-        '/helloworld' => [
-            ['POST', '.Greeter/SayHello', [\App\services\GreeterService::class, 'sayHello']],
+        '/demo' => [
+            ['POST', '.Greeting/SayHello', [\App\services\GreetingService::class, 'sayHello']],
         ],
     ],
 ];

@@ -16,33 +16,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-namespace Helloworld;
+namespace Demo;
 
 /**
  * The greeting service definition.
  */
-class GreeterClient extends \Grpc\BaseStub {
+class GreetingClient extends \Grpc\BaseStub {
 
     /**
      * @param string $hostname hostname
      * @param array $opts channel options
      * @param \Grpc\Channel $channel (optional) re-use channel object
      */
-    public function __construct($hostname, $opts, $channel = null) {
-        parent::__construct($hostname, $opts, $channel);
+    public function __construct($hostname, $opts = []) {
+        parent::__construct($hostname, $opts);
     }
 
     /**
      * Sends a greeting
-     * @param \Helloworld\HelloRequest $argument input argument
+     * @param \Demo\HelloRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
+     * @return \Demo\HelloReply[]|\Grpc\StringifyAble[]
      */
-    public function SayHello(\Helloworld\HelloRequest $argument,
+    public function SayHello(\Demo\HelloRequest $argument,
       $metadata = [], $options = []) {
-        return $this->_simpleRequest('/helloworld.Greeter/SayHello',
+        return $this->_simpleRequest('/demo.Greeting/SayHello',
         $argument,
-        ['\Helloworld\HelloReply', 'decode'],
+        ['\Demo\HelloReply', 'decode'],
         $metadata, $options);
     }
 
