@@ -18,7 +18,7 @@ Swoole http server without framework
 12. AMQP-0-9-1
 13. Zipkin Trace
 14. Dynamic Fault Injection
-15. Hot Reload(biz code、config、router)
+15. Hot Reload(biz code、config、router), recommended for dev only
 16. Experimental Grpc
 
 >## Requirements

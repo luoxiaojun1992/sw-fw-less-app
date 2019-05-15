@@ -42,6 +42,7 @@ return [
 
     //Hot Reload
     'hot_reload' => [
+        'switch' => envInt('HOT_RELOAD_SWITCH', 0),
         'watch_dirs' => [
             __DIR__ . '/',
             __DIR__ . '/../app/',
