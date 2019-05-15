@@ -25,7 +25,7 @@
     ],
     "autoload": {
         "psr-4": {"App\\": "app/"},
-        "classmap": ["app/grpc"]
+        "classmap": ["app/grpc-gen"]
     },
     "scripts": {
         "post-root-package-install": [
