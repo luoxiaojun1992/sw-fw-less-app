@@ -37,7 +37,7 @@ class GreetingClient extends \Grpc\BaseStub {
      * @param \Demo\HelloRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Demo\HelloReply[]|\Grpc\StringifyAble[]
+     * @return \Demo\HelloReply[]|\Demo\HelloReply|\Grpc\StringifyAble[]
      */
     public function SayHello(\Demo\HelloRequest $argument,
       $metadata = [], $options = []) {
