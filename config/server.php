@@ -9,6 +9,7 @@ $serverConfig = [
     'backlog' => envInt('SERVER_BACKLOG', 128),
     'max_request' => envInt('SERVER_MAX_REQUEST', 0),
     'dispatch_mode' => envInt('SERVER_DISPATCH_MODE', 2),
+    'open_http2_protocol' => envBool('SERVER_OPEN_HTTP2', false),
 ];
 
 if (!empty($pidFile = env('SERVER_PID_FILE'))) {
