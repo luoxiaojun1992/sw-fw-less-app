@@ -65,5 +65,21 @@ return [
     'ip_restriction' => [
         'ips' => env('IP_RESTRICTION_IPS'),
         'api_prefix' => env('IP_RESTRICTION_API_PREFIX'),
-    ]
+    ],
+
+    //Scheduler
+    'scheduler' => [
+//        [
+//            'schedule' => '* * * * *',
+//            'jobs' => function () {
+//                echo 'Every minute', PHP_EOL;
+//            },
+//        ],
+//        [
+//            'schedule' => '*/2 * * * *',
+//            'jobs' => function () {
+//                echo 'Every two minutes', PHP_EOL;
+//            },
+//        ],
+    ],
 ];
