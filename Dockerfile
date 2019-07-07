@@ -5,7 +5,7 @@ MAINTAINER luoxiaojun1992 <luoxiaojun1992@sina.cn>
 # Version
 ENV PHPREDIS_VERSION 4.0.0
 ENV HIREDIS_VERSION 0.13.3
-ENV SWOOLE_VERSION 4.4.0-alpha
+ENV SWOOLE_VERSION v4.4.0
 
 # Timezone
 RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
@@ -59,7 +59,7 @@ RUN wget https://github.com/redis/hiredis/archive/v${HIREDIS_VERSION}.tar.gz -O 
     && rm -r hiredis
 
 # Swoole extension
-RUN wget https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz -O swoole.tar.gz \
+RUN wget https://github.com/swoole/swoole-src/archive/${SWOOLE_VERSION}.tar.gz -O swoole.tar.gz \
     && mkdir -p swoole \
     && tar -xf swoole.tar.gz -C swoole --strip-components=1 \
     && rm swoole.tar.gz \
