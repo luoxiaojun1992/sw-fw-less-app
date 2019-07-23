@@ -8,7 +8,7 @@ return [
         ['GET', '/http', [\SwFwLess\services\DemoService::class, 'http']],
         ['GET', '/es', [\SwFwLess\services\DemoService::class, 'es']],
         ['GET', '/file', [\SwFwLess\services\DemoService::class, 'file']],
-        ['GET', '/qiniu', [\SwFwLess\services\DemoService::class, 'qiniu']],
+//        ['GET', '/qiniu', [\SwFwLess\services\DemoService::class, 'qiniu']],
         ['GET', '/rabbitmq', [\SwFwLess\services\DemoService::class, 'rabbitmq']],
         ['GET', '/alioss', [\SwFwLess\services\DemoService::class, 'alioss']],
         ['GET', '/hbase', [\SwFwLess\services\DemoService::class, 'hbase']],
