@@ -14,16 +14,14 @@ RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 # Libs
 RUN apt-get update \
     && apt-get install -y \
-        curl \
-        wget \
-        git \
-        zip \
+        curl wget git zip unzip less vim procps lsof tcpdump htop openssl \
         libz-dev \
         libssl-dev \
         libnghttp2-dev \
         libpcre3-dev \
-    && apt-get clean \
-    && apt-get autoremove
+        libjpeg-dev \
+        libpng-dev \
+        libfreetype6-dev
 
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php \
