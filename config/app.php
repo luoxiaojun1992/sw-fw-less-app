@@ -82,4 +82,6 @@ return [
 //            },
 //        ],
     ],
+
+    'route_di_switch' => envBool('ROUTE_DI_SWITCH', false),
 ];
