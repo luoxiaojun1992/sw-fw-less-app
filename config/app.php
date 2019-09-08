@@ -83,5 +83,6 @@ return [
 //        ],
     ],
 
+    //You can turn off the switch to improve the performance
     'route_di_switch' => envBool('ROUTE_DI_SWITCH', false),
 ];
