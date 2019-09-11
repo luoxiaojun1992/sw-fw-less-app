@@ -11,10 +11,13 @@
     ],
     "require": {
         "php": ">=7.1",
+        "ext-swoole": ">=4.4.0",
         "ext-json": "*",
         "ext-pdo": "*",
-        "ext-redis": "*",
         "luoxiaojun/sw-fw-less": "dev-master"
+    },
+    "suggest": {
+        "ext-redis": "*"
     },
     "license": "apache-2.0",
     "authors": [
