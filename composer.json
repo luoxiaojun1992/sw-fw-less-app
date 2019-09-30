@@ -17,7 +17,8 @@
         "luoxiaojun/sw-fw-less": "dev-master"
     },
     "suggest": {
-        "ext-redis": "*"
+        "ext-redis": "*",
+        "ext-curl": "*"
     },
     "license": "apache-2.0",
     "authors": [
