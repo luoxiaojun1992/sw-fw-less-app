@@ -16,6 +16,7 @@ return [
         ['GET', '/jwt', [\SwFwLess\services\DemoService::class, 'jwt']],
         ['GET', '/grpc', [\App\services\GrpcDemoService::class, 'greeting']],
         ['GET', '/log', [\SwFwLess\services\DemoService::class, 'log']],
+        ['GET', '/zipkin', [\SwFwLess\services\DemoService::class, 'zipkin']],
     ],
     'group' => [
         '/dining' => [
