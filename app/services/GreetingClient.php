@@ -10,8 +10,6 @@ namespace App\services;
 class GreetingClient  extends \Grpc\ClientStub
 {
 
-    use \SwFwLess\components\traits\Singleton;
-
     protected $grpc_client = \Demo\GreetingClient::class;
 
 }

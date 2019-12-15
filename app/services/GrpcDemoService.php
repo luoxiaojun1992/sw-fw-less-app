@@ -13,7 +13,7 @@ class GrpcDemoService extends BaseService
         $request = new HelloRequest();
         $request->setName('ping');
 
-        $reply = GreetingClient::create()->SayHello($request);
+        $reply = (new GreetingClient())->SayHello($request);
 
         if ($reply) {
             $message = $reply->getMessage();
