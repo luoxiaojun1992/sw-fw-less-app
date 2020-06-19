@@ -9,6 +9,14 @@ use Demo\HelloReply;
  */
 class GreetingService extends \SwFwLess\services\GrpcUnaryService implements \App\services\GreetingInterface
 {
+    public function requestMessageClass($method)
+    {
+        $requestMessageClasses = [
+            'SayHello' => \Demo\HelloRequest::class,
+        ];
+
+        return $requestMessageClasses[$method] ?? null;
+    }
 
     /**
      * Sends a greeting

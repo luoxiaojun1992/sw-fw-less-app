@@ -26,7 +26,7 @@ return [
             ['POST', '/login', [\SwFwLess\services\DiningService::class, 'login']],
         ],
         '/demo' => [
-            ['POST', '.Greeting/SayHello', [\App\services\GreetingService::class, 'sayHello']],
+            ['POST', '.Greeting/SayHello', [\App\services\GreetingService::class, 'SayHello']],
         ],
     ],
 ];
