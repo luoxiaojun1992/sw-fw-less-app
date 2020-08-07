@@ -15,6 +15,7 @@ return [
                 \PDO::ATTR_EMULATE_PREPARES => false,
             ],
             'pool_size' => envInt('MYSQL_POOL_SIZE', 5),
+            'table_prefix' => env('MYSQL_TABLE_PREFIX', ''),
         ],
     ],
     'switch' => envInt('MYSQL_SWITCH', 0),
