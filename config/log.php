@@ -7,5 +7,5 @@ return [
     'buffer_max_size' => envInt('LOG_BUFFER_MAX_SIZE', 10),
     'name' => env('LOG_NAME', 'sw-fw-less'),
     'reserve_days' => envInt('LOG_RESERVE_DAYS', 3),
-    'switch' => envInt('LOG_SWITCH', 0),
+    'switch' => envInt('LOG_SWITCH', 1),
 ];
