@@ -2,7 +2,7 @@
 
 current=$(pwd)
 
-../vendor/bin/generator \
+../vendor/bin/grpc_generator \
 --proto_path=$current/../app/grpc-gen/protos \
 --php_out=$current/../app/grpc-gen \
 --grpc_out=$current/../app/grpc-gen \
