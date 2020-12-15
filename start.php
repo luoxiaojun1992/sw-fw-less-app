@@ -6,6 +6,8 @@ if (extension_loaded('jsonnet')) {
     !defined('CONFIG_FORMAT') && define('CONFIG_FORMAT', 'array,jsonnet');
 }
 
+!defined('RAW_FUNCTIONS') && define('RAW_FUNCTIONS', false);
+
 require_once __DIR__ . '/vendor/autoload.php';
 
 //This app supports hot reload and shutdown triggered by SIGTERM
