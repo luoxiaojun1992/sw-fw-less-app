@@ -21,6 +21,7 @@
 
 <script>
     var serverAddr = "http://127.0.0.1:9501";
+    var maxDataCount = 7;
 
     function sampleData() {
         fetch(serverAddr+'/internal/monitor/pool')
@@ -44,7 +45,7 @@
                 };
 
                 mysqlPoolData.push(currentMysqlPoolData);
-                if (mysqlPoolData.length > 5) {
+                if (mysqlPoolData.length > maxDataCount) {
                     mysqlPoolData.shift();
                 }
 
@@ -63,7 +64,7 @@
                 };
 
                 objectPoolData.push(currentObjectPoolData);
-                if (objectPoolData.length > 5) {
+                if (objectPoolData.length > maxDataCount) {
                     objectPoolData.shift();
                 }
 
@@ -89,7 +90,7 @@
                 };
 
                 memoryData.push(currentData);
-                if (memoryData.length > 5) {
+                if (memoryData.length > maxDataCount) {
                     memoryData.shift();
                 }
 
@@ -116,7 +117,7 @@
                 };
 
                 coroutineData.push(currentCoroutineData);
-                if (coroutineData.length > 5) {
+                if (coroutineData.length > maxDataCount) {
                     coroutineData.shift();
                 }
 
@@ -135,7 +136,7 @@
                 };
 
                 idleWorkerData.push(currentIdleWorkerData);
-                if (idleWorkerData.length > 5) {
+                if (idleWorkerData.length > maxDataCount) {
                     idleWorkerData.shift();
                 }
 
@@ -154,7 +155,7 @@
                 };
 
                 connectionData.push(currentConnectionData);
-                if (connectionData.length > 5) {
+                if (connectionData.length > maxDataCount) {
                     connectionData.shift();
                 }
 
@@ -173,7 +174,7 @@
                 };
 
                 workerData.push(currentWorkerData);
-                if (workerData.length > 5) {
+                if (workerData.length > maxDataCount) {
                     workerData.shift();
                 }
 
@@ -200,7 +201,7 @@
                 };
 
                 cpuData.push(currentCpuData);
-                if (cpuData.length > 5) {
+                if (cpuData.length > maxDataCount) {
                     cpuData.shift();
                 }
 
