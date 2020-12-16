@@ -12,8 +12,10 @@
 <div id="chart_memory" style="width: 700px;height:400px;"></div>
 
 <script>
+    var serverPort = "9501";
+
     function sampleData() {
-        fetch('http://127.0.0.1:9501/internal/monitor/pool')
+        fetch('http://127.0.0.1:'+serverPort+'/internal/monitor/pool')
             .then(function (response) {
                 return response.json();
             })
@@ -44,7 +46,7 @@
                 });
             });
 
-        fetch('http://127.0.0.1:9501/internal/monitor/memory')
+        fetch('http://127.0.0.1:'+serverPort+'/internal/monitor/memory')
             .then(function (response) {
                 return response.json();
             })
