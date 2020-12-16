@@ -7,12 +7,17 @@
 </head>
 <body>
 
-<div id="chart_mysql_pool" style="width: 700px;height:400px;float: left;"></div>
+<h2 style="width: 100%;text-align: center;float: left;">Machine Monitor</h2>
 <div id="chart_memory" style="width: 700px;height:400px;float: left;"></div>
+<div id="chart_cpu" style="width: 700px;height:400px;float: left;"></div>
+<h2 style="width: 100%;text-align: center;float: left;">Swoole Monitor</h2>
 <div id="chart_coroutine" style="width: 700px;height:400px;float: left;"></div>
 <div id="chart_idle_worker" style="width: 700px;height:400px;float: left;"></div>
 <div id="chart_connection" style="width: 700px;height:400px;float: left;"></div>
+<div id="chart_worker" style="width: 700px;height:400px;float: left;"></div>
+<h2 style="width: 100%;text-align: center;float: left;">Pool Monitor</h2>
 <div id="chart_object_pool" style="width: 700px;height:400px;float: left;"></div>
+<div id="chart_mysql_pool" style="width: 700px;height:400px;float: left;"></div>
 
 <script>
     var serverAddr = "http://127.0.0.1:9501";
@@ -158,6 +163,52 @@
                         data: connectionData
                     }]
                 });
+
+                var currentWorkerData = {
+                    value: [
+                        now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() + ' ' +
+                        now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds(),
+                        myJson.swoole.worker_num
+                    ]
+                };
+
+                workerData.push(currentWorkerData);
+                if (workerData.length > 5) {
+                    workerData.shift();
+                }
+
+                chartWorker.setOption({
+                    series: [{
+                        data: workerData
+                    }]
+                });
+            });
+
+        fetch(serverAddr+'/internal/monitor/cpu')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (myJson) {
+                var now = new Date();
+
+                var currentCpuData = {
+                    value: [
+                        now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() + ' ' +
+                        now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds(),
+                        myJson.sys_load[0]
+                    ]
+                };
+
+                cpuData.push(currentCpuData);
+                if (cpuData.length > 5) {
+                    cpuData.shift();
+                }
+
+                chartCpu.setOption({
+                    series: [{
+                        data: cpuData
+                    }]
+                });
             });
     }
 
@@ -167,6 +218,8 @@
     var idleWorkerData = [];
     var connectionData = [];
     var objectPoolData = [];
+    var cpuData = [];
+    var workerData = [];
 
     var chartMysqlPoolOption = {
         title: {
@@ -384,6 +437,78 @@
         }]
     };
 
+    var chartCpuOption = {
+        title: {
+            text: 'CPU'
+        },
+        tooltip: {
+            trigger: 'axis',
+            formatter: function (params) {
+                params = params[0];
+                return params.value[1];
+            },
+            axisPointer: {
+                animation: false
+            }
+        },
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: true
+            }
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%'],
+            splitLine: {
+                show: true
+            }
+        },
+        series: [{
+            name: 'CPU Data',
+            type: 'line',
+            showSymbol: false,
+            hoverAnimation: false,
+            data: cpuData
+        }]
+    };
+
+    var chartWorkerOption = {
+        title: {
+            text: 'Worker'
+        },
+        tooltip: {
+            trigger: 'axis',
+            formatter: function (params) {
+                params = params[0];
+                return params.value[1];
+            },
+            axisPointer: {
+                animation: false
+            }
+        },
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: true
+            }
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%'],
+            splitLine: {
+                show: true
+            }
+        },
+        series: [{
+            name: 'Worker Data',
+            type: 'line',
+            showSymbol: false,
+            hoverAnimation: false,
+            data: workerData
+        }]
+    };
+
     var chartMysqlPool = echarts.init(document.getElementById('chart_mysql_pool'));
     chartMysqlPool.setOption(chartMysqlPoolOption);
 
@@ -401,6 +526,12 @@
 
     var chartObjectPool = echarts.init(document.getElementById('chart_object_pool'));
     chartObjectPool.setOption(chartObjectPoolOption);
+
+    var chartCpu = echarts.init(document.getElementById('chart_cpu'));
+    chartCpu.setOption(chartCpuOption);
+
+    var chartWorker = echarts.init(document.getElementById('chart_worker'));
+    chartWorker.setOption(chartWorkerOption);
 
     setInterval(function () {
         sampleData();
