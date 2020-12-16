@@ -12,6 +12,7 @@
 <div id="chart_coroutine" style="width: 700px;height:400px;float: left;"></div>
 <div id="chart_idle_worker" style="width: 700px;height:400px;float: left;"></div>
 <div id="chart_connection" style="width: 700px;height:400px;float: left;"></div>
+<div id="chart_object_pool" style="width: 700px;height:400px;float: left;"></div>
 
 <script>
     var serverPort = "9501";
@@ -28,6 +29,7 @@
                 }
 
                 var now = new Date();
+
                 var currentMysqlPoolData = {
                     value: [
                         now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() + ' ' +
@@ -44,6 +46,25 @@
                 chartMysqlPool.setOption({
                     series: [{
                         data: mysqlPoolData
+                    }]
+                });
+
+                var currentObjectPoolData = {
+                    value: [
+                        now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() + ' ' +
+                        now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds(),
+                        myJson.object.total
+                    ]
+                };
+
+                objectPoolData.push(currentObjectPoolData);
+                if (objectPoolData.length > 5) {
+                    objectPoolData.shift();
+                }
+
+                chartObjectPool.setOption({
+                    series: [{
+                        data: objectPoolData
                     }]
                 });
             });
@@ -145,6 +166,7 @@
     var coroutineData = [];
     var idleWorkerData = [];
     var connectionData = [];
+    var objectPoolData = [];
 
     var chartMysqlPoolOption = {
         title: {
@@ -163,14 +185,14 @@
         xAxis: {
             type: 'time',
             splitLine: {
-                show: false
+                show: true
             }
         },
         yAxis: {
             type: 'value',
             boundaryGap: [0, '100%'],
             splitLine: {
-                show: false
+                show: true
             }
         },
         series: [{
@@ -199,14 +221,14 @@
         xAxis: {
             type: 'time',
             splitLine: {
-                show: false
+                show: true
             }
         },
         yAxis: {
             type: 'value',
             boundaryGap: [0, '100%'],
             splitLine: {
-                show: false
+                show: true
             }
         },
         series: [{
@@ -235,14 +257,14 @@
         xAxis: {
             type: 'time',
             splitLine: {
-                show: false
+                show: true
             }
         },
         yAxis: {
             type: 'value',
             boundaryGap: [0, '100%'],
             splitLine: {
-                show: false
+                show: true
             }
         },
         series: [{
@@ -271,14 +293,14 @@
         xAxis: {
             type: 'time',
             splitLine: {
-                show: false
+                show: true
             }
         },
         yAxis: {
             type: 'value',
             boundaryGap: [0, '100%'],
             splitLine: {
-                show: false
+                show: true
             }
         },
         series: [{
@@ -307,14 +329,14 @@
         xAxis: {
             type: 'time',
             splitLine: {
-                show: false
+                show: true
             }
         },
         yAxis: {
             type: 'value',
             boundaryGap: [0, '100%'],
             splitLine: {
-                show: false
+                show: true
             }
         },
         series: [{
@@ -323,6 +345,42 @@
             showSymbol: false,
             hoverAnimation: false,
             data: connectionData
+        }]
+    };
+
+    var chartObjectPoolOption = {
+        title: {
+            text: 'Object Pool'
+        },
+        tooltip: {
+            trigger: 'axis',
+            formatter: function (params) {
+                params = params[0];
+                return params.value[1];
+            },
+            axisPointer: {
+                animation: false
+            }
+        },
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: true
+            }
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%'],
+            splitLine: {
+                show: true
+            }
+        },
+        series: [{
+            name: 'Object Pool Data',
+            type: 'line',
+            showSymbol: false,
+            hoverAnimation: false,
+            data: objectPoolData
         }]
     };
 
@@ -340,6 +398,9 @@
 
     var chartConnection = echarts.init(document.getElementById('chart_connection'));
     chartConnection.setOption(chartConnectionOption);
+
+    var chartObjectPool = echarts.init(document.getElementById('chart_object_pool'));
+    chartObjectPool.setOption(chartObjectPoolOption);
 
     setInterval(function () {
         sampleData();
