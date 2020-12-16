@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入 ECharts 文件 -->
+    <script src="echarts.min.js"></script>
+</head>
+<body>
+
+<div id="chart_mysql_pool" style="width: 700px;height:400px;"></div>
+<div id="chart_memory" style="width: 700px;height:400px;"></div>
+
+<script>
+    function sampleData() {
+        fetch('http://127.0.0.1:9501/internal/monitor/pool')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (myJson) {
+                var mysqlPoolCount = myJson.mysql;
+                if (mysqlPoolCount == null) {
+                    mysqlPoolCount = 0;
+                }
+
+                var now = new Date();
+                var currentMysqlPoolData = {
+                    value: [
+                        now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() + ' ' +
+                        now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds(),
+                        mysqlPoolCount
+                    ]
+                };
+
+                mysqlPoolData.push(currentMysqlPoolData);
+                if (mysqlPoolData.length > 5) {
+                    mysqlPoolData.shift();
+                }
+
+                chartMysqlPool.setOption({
+                    series: [{
+                        data: mysqlPoolData
+                    }]
+                });
+            });
+
+        fetch('http://127.0.0.1:50051/internal/monitor/memory')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (myJson) {
+                var now = new Date();
+                var currentData = {
+                    value: [
+                        now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() + ' ' +
+                        now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds(),
+                        myJson.usage
+                    ]
+                };
+
+                memoryData.push(currentData);
+                if (memoryData.length > 5) {
+                    memoryData.shift();
+                }
+
+                chartMemory.setOption({
+                    series: [{
+                        data: memoryData
+                    }]
+                });
+            });
+    }
+
+    var mysqlPoolData = [];
+    var memoryData = [];
+
+    var chartMysqlPoolOption = {
+        title: {
+            text: 'MySQL Pool'
+        },
+        tooltip: {
+            trigger: 'axis',
+            formatter: function (params) {
+                params = params[0];
+                return params.value[1];
+            },
+            axisPointer: {
+                animation: false
+            }
+        },
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: false
+            }
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%'],
+            splitLine: {
+                show: false
+            }
+        },
+        series: [{
+            name: '模拟数据',
+            type: 'line',
+            showSymbol: false,
+            hoverAnimation: false,
+            data: mysqlPoolData
+        }]
+    };
+
+    var chartMemoryOption = {
+        title: {
+            text: 'Memory'
+        },
+        tooltip: {
+            trigger: 'axis',
+            formatter: function (params) {
+                params = params[0];
+                return params.value[1];
+            },
+            axisPointer: {
+                animation: false
+            }
+        },
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: false
+            }
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%'],
+            splitLine: {
+                show: false
+            }
+        },
+        series: [{
+            name: '模拟数据',
+            type: 'line',
+            showSymbol: false,
+            hoverAnimation: false,
+            data: memoryData
+        }]
+    };
+
+    var chartMysqlPool = echarts.init(document.getElementById('chart_mysql_pool'));
+    chartMysqlPool.setOption(chartMysqlPoolOption);
+
+    var chartMemory = echarts.init(document.getElementById('chart_memory'));
+    chartMemory.setOption(chartMemoryOption);
+
+    setInterval(function () {
+        sampleData();
+    }, 1000);
+</script>
+</body>
+</html>
