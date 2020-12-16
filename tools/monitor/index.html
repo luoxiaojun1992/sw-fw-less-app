@@ -7,8 +7,10 @@
 </head>
 <body>
 
-<div id="chart_mysql_pool" style="width: 700px;height:400px;"></div>
-<div id="chart_memory" style="width: 700px;height:400px;"></div>
+<div id="chart_mysql_pool" style="width: 700px;height:400px;float: left;"></div>
+<div id="chart_memory" style="width: 700px;height:400px;float: left;"></div>
+<div id="chart_coroutine" style="width: 700px;height:400px;float: left;"></div>
+<div id="chart_idle_worker" style="width: 700px;height:400px;float: left;"></div>
 
 <script>
     var serverPort = "9501";
@@ -70,10 +72,58 @@
                     }]
                 });
             });
+
+        fetch('http://127.0.0.1:'+serverPort+'/internal/monitor/swoole')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (myJson) {
+                var now = new Date();
+
+                var currentCoroutineData = {
+                    value: [
+                        now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() + ' ' +
+                        now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds(),
+                        myJson.coroutine.coroutine_num
+                    ]
+                };
+
+                coroutineData.push(currentCoroutineData);
+                if (coroutineData.length > 5) {
+                    coroutineData.shift();
+                }
+
+                chartCoroutine.setOption({
+                    series: [{
+                        data: coroutineData
+                    }]
+                });
+
+                var currentIdleWorkerData = {
+                    value: [
+                        now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() + ' ' +
+                        now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds(),
+                        myJson.swoole.idle_worker_num
+                    ]
+                };
+
+                idleWorkerData.push(currentIdleWorkerData);
+                if (idleWorkerData.length > 5) {
+                    idleWorkerData.shift();
+                }
+
+                chartIdleWorker.setOption({
+                    series: [{
+                        data: idleWorkerData
+                    }]
+                });
+            });
     }
 
     var mysqlPoolData = [];
     var memoryData = [];
+    var coroutineData = [];
+    var idleWorkerData = [];
 
     var chartMysqlPoolOption = {
         title: {
@@ -147,11 +197,89 @@
         }]
     };
 
+    var chartCoroutineOption = {
+        title: {
+            text: 'Coroutine'
+        },
+        tooltip: {
+            trigger: 'axis',
+            formatter: function (params) {
+                params = params[0];
+                return params.value[1];
+            },
+            axisPointer: {
+                animation: false
+            }
+        },
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: false
+            }
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%'],
+            splitLine: {
+                show: false
+            }
+        },
+        series: [{
+            name: 'Coroutine Data',
+            type: 'line',
+            showSymbol: false,
+            hoverAnimation: false,
+            data: coroutineData
+        }]
+    };
+
+    var chartIdleWorkerOption = {
+        title: {
+            text: 'Idle Worker'
+        },
+        tooltip: {
+            trigger: 'axis',
+            formatter: function (params) {
+                params = params[0];
+                return params.value[1];
+            },
+            axisPointer: {
+                animation: false
+            }
+        },
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: false
+            }
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%'],
+            splitLine: {
+                show: false
+            }
+        },
+        series: [{
+            name: 'Idle Worker Data',
+            type: 'line',
+            showSymbol: false,
+            hoverAnimation: false,
+            data: idleWorkerData
+        }]
+    };
+
     var chartMysqlPool = echarts.init(document.getElementById('chart_mysql_pool'));
     chartMysqlPool.setOption(chartMysqlPoolOption);
 
     var chartMemory = echarts.init(document.getElementById('chart_memory'));
     chartMemory.setOption(chartMemoryOption);
+
+    var chartCoroutine = echarts.init(document.getElementById('chart_coroutine'));
+    chartCoroutine.setOption(chartCoroutineOption);
+
+    var chartIdleWorker = echarts.init(document.getElementById('chart_idle_worker'));
+    chartIdleWorker.setOption(chartIdleWorkerOption);
 
     setInterval(function () {
         sampleData();
