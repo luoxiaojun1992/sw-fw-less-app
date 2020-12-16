@@ -15,10 +15,10 @@
 <div id="chart_object_pool" style="width: 700px;height:400px;float: left;"></div>
 
 <script>
-    var serverPort = "9501";
+    var serverAddr = "http://127.0.0.1:9501";
 
     function sampleData() {
-        fetch('http://127.0.0.1:'+serverPort+'/internal/monitor/pool')
+        fetch(serverAddr+'/internal/monitor/pool')
             .then(function (response) {
                 return response.json();
             })
@@ -69,7 +69,7 @@
                 });
             });
 
-        fetch('http://127.0.0.1:'+serverPort+'/internal/monitor/memory')
+        fetch(serverAddr+'/internal/monitor/memory')
             .then(function (response) {
                 return response.json();
             })
@@ -95,7 +95,7 @@
                 });
             });
 
-        fetch('http://127.0.0.1:'+serverPort+'/internal/monitor/swoole')
+        fetch(serverAddr+'/internal/monitor/swoole')
             .then(function (response) {
                 return response.json();
             })
