@@ -77,15 +77,16 @@
                 });
 
                 var classPool = myJson.object.classes;
-                var classPoolTotal = 0;
-                var objectPoolClassCategory = [];
+                var classTotal = 0;
 
                 objectPoolHeatMapTime.push(currentTime);
 
+                objectPoolClassCategory = [];
+
                 for (var className in classPool) {
                     objectPoolClassCategory.push(className);
-                    objectPoolHeatData.push([objectPoolHeatMapTime.length - 1, classPoolTotal, classPool[className]]);
-                    classPoolTotal++;
+                    objectPoolHeatData.push([objectPoolHeatMapTime.length - 1, classTotal, classPool[className]]);
+                    classTotal++;
                 }
 
                 if (objectPoolHeatMapTime.length > maxDataCount) {
@@ -95,9 +96,9 @@
                     objectPoolHeatData.shift();
 
                     for (var i in objectPoolHeatData) {
-                        if (i % classPoolTotal == 0) {
-                            for (var j = 0; j < classPoolTotal; j++) {
-                                objectPoolHeatData[parseInt(i) + j] = [i / classPoolTotal, objectPoolHeatData[parseInt(i) + j][1], objectPoolHeatData[parseInt(i) + j][2]];
+                        if (i % classTotal == 0) {
+                            for (var j = 0; j < classTotal; j++) {
+                                objectPoolHeatData[parseInt(i) + j] = [i / classTotal, objectPoolHeatData[parseInt(i) + j][1], objectPoolHeatData[parseInt(i) + j][2]];
                             }
                         }
                     }
@@ -264,7 +265,7 @@
     var workerData = [];
 
     var objectPoolHeatMapTime = [];
-    var classCategory = [];
+    var objectPoolClassCategory = [];
     var objectPoolHeatData = [];
 
     var chartMysqlPoolOption = {
@@ -560,7 +561,10 @@
             text: 'Object Pool Heat Map'
         },
         tooltip: {
-            position: 'top'
+            position: 'top',
+            formatter: function (params) {
+                return params.name + ' - ' + objectPoolClassCategory[params.data[1]] + ': ' + params.data[2];
+            },
         },
         animation: false,
         grid: {
@@ -576,7 +580,7 @@
         },
         yAxis: {
             type: 'category',
-            data: classCategory,
+            data: objectPoolClassCategory,
             splitArea: {
                 show: true
             }
