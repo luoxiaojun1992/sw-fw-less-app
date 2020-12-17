@@ -37,10 +37,12 @@
 
                 var now = new Date();
 
+                var currentTime = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() + ' ' +
+                    now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+
                 var currentMysqlPoolData = {
                     value: [
-                        now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() + ' ' +
-                        now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds(),
+                        currentTime,
                         mysqlPoolCount
                     ]
                 };
@@ -58,8 +60,7 @@
 
                 var currentObjectPoolData = {
                     value: [
-                        now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() + ' ' +
-                        now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds(),
+                        currentTime,
                         myJson.object.total
                     ]
                 };
@@ -72,6 +73,45 @@
                 chartObjectPool.setOption({
                     series: [{
                         data: objectPoolData
+                    }]
+                });
+
+                var classPool = myJson.object.classes;
+                var classPoolTotal = 0;
+                var objectPoolClassCategory = [];
+
+                objectPoolHeatMapTime.push(currentTime);
+
+                for (var className in classPool) {
+                    objectPoolClassCategory.push(className);
+                    objectPoolHeatData.push([objectPoolHeatMapTime.length - 1, classPoolTotal, classPool[className]]);
+                    classPoolTotal++;
+                }
+
+                if (objectPoolHeatMapTime.length > maxDataCount) {
+                    objectPoolHeatMapTime.shift();
+                    objectPoolHeatData.shift();
+                    objectPoolHeatData.shift();
+                    objectPoolHeatData.shift();
+
+                    for (var i in objectPoolHeatData) {
+                        if (i % classPoolTotal == 0) {
+                            for (var j = 0; j < classPoolTotal; j++) {
+                                objectPoolHeatData[parseInt(i) + j] = [i / classPoolTotal, objectPoolHeatData[parseInt(i) + j][1], objectPoolHeatData[parseInt(i) + j][2]];
+                            }
+                        }
+                    }
+                }
+
+                chartObjectPoolHeatMap.setOption({
+                    xAxis: {
+                        data: objectPoolHeatMapTime
+                    },
+                    yAxis: {
+                        data: objectPoolClassCategory
+                    },
+                    series:[{
+                        data: objectPoolHeatData
                     }]
                 });
             });
@@ -212,39 +252,6 @@
                     }]
                 });
             });
-
-        var now = new Date();
-
-        var currentTime = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() + ' ' +
-            now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
-        objectPoolHeatMapTime.push(currentTime);
-        objectPoolHeatData.push([objectPoolHeatMapTime.length - 1, 0, Math.random() * 10]);
-        objectPoolHeatData.push([objectPoolHeatMapTime.length - 1, 1, Math.random() * 10]);
-        objectPoolHeatData.push([objectPoolHeatMapTime.length - 1, 2, Math.random() * 10]);
-
-        if (objectPoolHeatMapTime.length >= 7) {
-            objectPoolHeatMapTime.shift();
-            objectPoolHeatData.shift();
-            objectPoolHeatData.shift();
-            objectPoolHeatData.shift();
-
-            for (var i in objectPoolHeatData) {
-                if (i % 3 == 0) {
-                    objectPoolHeatData[i] = [i / 3, objectPoolHeatData[i][1], objectPoolHeatData[i][2]];
-                    objectPoolHeatData[parseInt(i) + 1] = [i / 3, objectPoolHeatData[parseInt(i) + 1][1], objectPoolHeatData[parseInt(i) + 1][2]];
-                    objectPoolHeatData[parseInt(i) + 2] = [i / 3, objectPoolHeatData[parseInt(i) + 2][1], objectPoolHeatData[parseInt(i) + 2][2]];
-                }
-            }
-        }
-
-        chartObjectPoolHeatMap.setOption({
-            xAxis: {
-                data: objectPoolHeatMapTime
-            },
-            series:[{
-                data: objectPoolHeatData
-            }]
-        });
     }
 
     var mysqlPoolData = [];
@@ -257,7 +264,7 @@
     var workerData = [];
 
     var objectPoolHeatMapTime = [];
-    var classCategory = ['class1', 'class2', 'class3'];
+    var classCategory = [];
     var objectPoolHeatData = [];
 
     var chartMysqlPoolOption = {
