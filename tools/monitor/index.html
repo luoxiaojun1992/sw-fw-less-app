@@ -18,6 +18,7 @@
 <h2 style="width: 100%;text-align: center;float: left;">Pool Monitor</h2>
 <div id="chart_object_pool" style="width: 700px;height:400px;float: left;"></div>
 <div id="chart_mysql_pool" style="width: 700px;height:400px;float: left;"></div>
+<div id="chart_object_pool_heat_map" style="width: 100%;height:400px;float: left;"></div>
 
 <script>
     var serverAddr = "http://127.0.0.1:9501";
@@ -211,6 +212,39 @@
                     }]
                 });
             });
+
+        var now = new Date();
+
+        var currentTime = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() + ' ' +
+            now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+        objectPoolHeatMapTime.push(currentTime);
+        objectPoolHeatData.push([objectPoolHeatMapTime.length - 1, 0, Math.random() * 10]);
+        objectPoolHeatData.push([objectPoolHeatMapTime.length - 1, 1, Math.random() * 10]);
+        objectPoolHeatData.push([objectPoolHeatMapTime.length - 1, 2, Math.random() * 10]);
+
+        if (objectPoolHeatMapTime.length >= 7) {
+            objectPoolHeatMapTime.shift();
+            objectPoolHeatData.shift();
+            objectPoolHeatData.shift();
+            objectPoolHeatData.shift();
+
+            for (var i in objectPoolHeatData) {
+                if (i % 3 == 0) {
+                    objectPoolHeatData[i] = [i / 3, objectPoolHeatData[i][1], objectPoolHeatData[i][2]];
+                    objectPoolHeatData[parseInt(i) + 1] = [i / 3, objectPoolHeatData[parseInt(i) + 1][1], objectPoolHeatData[parseInt(i) + 1][2]];
+                    objectPoolHeatData[parseInt(i) + 2] = [i / 3, objectPoolHeatData[parseInt(i) + 2][1], objectPoolHeatData[parseInt(i) + 2][2]];
+                }
+            }
+        }
+
+        chartObjectPoolHeatMap.setOption({
+            xAxis: {
+                data: objectPoolHeatMapTime
+            },
+            series:[{
+                data: objectPoolHeatData
+            }]
+        });
     }
 
     var mysqlPoolData = [];
@@ -221,6 +255,10 @@
     var objectPoolData = [];
     var cpuData = [];
     var workerData = [];
+
+    var objectPoolHeatMapTime = [];
+    var classCategory = ['class1', 'class2', 'class3'];
+    var objectPoolHeatData = [];
 
     var chartMysqlPoolOption = {
         title: {
@@ -510,6 +548,56 @@
         }]
     };
 
+    var chartObjectPoolHeatMapOption = {
+        title: {
+            text: 'Object Pool Heat Map'
+        },
+        tooltip: {
+            position: 'top'
+        },
+        animation: false,
+        grid: {
+            height: '50%',
+            top: '10%'
+        },
+        xAxis: {
+            type: 'category',
+            data: objectPoolHeatMapTime,
+            splitArea: {
+                show: true
+            }
+        },
+        yAxis: {
+            type: 'category',
+            data: classCategory,
+            splitArea: {
+                show: true
+            }
+        },
+        visualMap: {
+            min: 0,
+            max: 10,
+            calculable: true,
+            orient: 'horizontal',
+            left: 'center',
+            bottom: '15%'
+        },
+        series: [{
+            name: 'Object Pool Heat Map',
+            type: 'heatmap',
+            data: objectPoolHeatData,
+            label: {
+                show: true
+            },
+            emphasis: {
+                itemStyle: {
+                    shadowBlur: 10,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }]
+    };
+
     var chartMysqlPool = echarts.init(document.getElementById('chart_mysql_pool'));
     chartMysqlPool.setOption(chartMysqlPoolOption);
 
@@ -533,6 +621,9 @@
 
     var chartWorker = echarts.init(document.getElementById('chart_worker'));
     chartWorker.setOption(chartWorkerOption);
+
+    var chartObjectPoolHeatMap = echarts.init(document.getElementById('chart_object_pool_heat_map'));
+    chartObjectPoolHeatMap.setOption(chartObjectPoolHeatMapOption);
 
     setInterval(function () {
         sampleData();
