@@ -13,6 +13,7 @@ return [
                 \PDO::ATTR_ORACLE_NULLS => \PDO::NULL_NATURAL,
                 \PDO::ATTR_STRINGIFY_FETCHES => false,
                 \PDO::ATTR_EMULATE_PREPARES => false,
+                \PDO::ATTR_PERSISTENT => false,
             ],
             'pool_size' => \SwFwLess\components\functions\envInt('MYSQL_POOL_SIZE', 5),
             'table_prefix' => \SwFwLess\components\functions\env('MYSQL_TABLE_PREFIX', ''),
