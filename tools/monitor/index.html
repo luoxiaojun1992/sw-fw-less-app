@@ -19,8 +19,31 @@
 <div id="chart_object_pool" style="width: 700px;height:400px;float: left;"></div>
 <div id="chart_mysql_pool" style="width: 700px;height:400px;float: left;"></div>
 <div id="chart_object_pool_heat_map" style="width: 100%;height:400px;float: left;"></div>
+<h2 style="width: 100%;text-align: center;float: left;">Health Check</h2>
+<table style="width: 100%; float: left; text-align: center; border: 1px solid black; margin-bottom: 100px;">
+    <thead>
+        <tr>
+            <th style="border: 1px solid black;">Item</th>
+            <th style="border: 1px solid black;">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="border: 1px solid black;">Framework</td>
+            <td id="framework_health" style="border: 1px solid black; color: black;">Unknown</td>
+        </tr>
+    </tbody>
+</table>
 
 <script>
+    const HEALTH_STATUS_UNKNOWN = 'Unknown';
+    const HEALTH_STATUS_HEALTH = 'Health';
+    const HEALTH_STATUS_BAD = 'Bad';
+
+    const HEALTH_COLOR_UNKNOWN = 'black';
+    const HEALTH_COLOR_HEALTH = 'green';
+    const HEALTH_COLOR_BAD = 'red';
+
     function compareObjectPoolClasses(oldClasses, newClasses) {
         for (var i in newClasses) {
             if (oldClasses[i] === undefined) {
@@ -274,6 +297,54 @@
                         data: cpuData
                     }]
                 });
+            });
+
+        fetch(serverAddr+'/internal/monitor/cpu')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (myJson) {
+                var now = new Date();
+
+                var currentCpuData = {
+                    value: [
+                        now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() + ' ' +
+                        now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds(),
+                        myJson.sys_load[0]
+                    ]
+                };
+
+                cpuData.push(currentCpuData);
+                if (cpuData.length > maxDataCount) {
+                    cpuData.shift();
+                }
+
+                chartCpu.setOption({
+                    series: [{
+                        data: cpuData
+                    }]
+                });
+            });
+
+        fetch(serverAddr+'/internal/monitor/status')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (myJson) {
+                var frameworkHealth = document.getElementById('framework_health');
+                if (myJson.status) {
+                    frameworkHealth.innerText = HEALTH_STATUS_HEALTH;
+                    frameworkHealth.style.color = HEALTH_COLOR_HEALTH;
+                } else {
+                    frameworkHealth.innerText = HEALTH_STATUS_BAD;
+                    frameworkHealth.style.color = HEALTH_COLOR_BAD;
+                }
+            })
+            .catch(function (error) {
+                frameworkHealth.innerText = HEALTH_STATUS_UNKNOWN;
+                frameworkHealth.style.color = HEALTH_COLOR_UNKNOWN;
+                console.log("Health check error.");
+                console.log(error);
             });
     }
 
@@ -657,6 +728,10 @@
 
     var chartObjectPoolHeatMap = echarts.init(document.getElementById('chart_object_pool_heat_map'));
     chartObjectPoolHeatMap.setOption(chartObjectPoolHeatMapOption);
+
+    var frameworkHealth = document.getElementById('framework_health');
+    frameworkHealth.innerText = HEALTH_STATUS_UNKNOWN;
+    frameworkHealth.style.color = HEALTH_COLOR_UNKNOWN;
 
     setInterval(function () {
         sampleData();
