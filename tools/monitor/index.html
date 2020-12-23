@@ -22,7 +22,16 @@
 
 <script>
     function compareObjectPoolClasses(oldClasses, newClasses) {
-        //TODO
+        for (var i in newClasses) {
+            if (oldClasses[i] === undefined) {
+                return false;
+            }
+            if (oldClasses[i] !== newClasses[i]) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     var serverAddr = "http://127.0.0.1:9501";
@@ -81,14 +90,24 @@
                 });
 
                 var classPool = myJson.object.classes;
-                var classTotal = 0;
 
                 objectPoolHeatMapTime.push(currentTime);
+
+                var oldObjectPoolClassCategory = objectPoolClassCategory;
 
                 objectPoolClassCategory = [];
 
                 for (var className in classPool) {
                     objectPoolClassCategory.push(className);
+                }
+
+                if (!compareObjectPoolClasses(oldObjectPoolClassCategory, objectPoolClassCategory)) {
+                    objectPoolHeatMapTime = [];
+                    objectPoolHeatData = [];
+                }
+
+                var classTotal = 0;
+                for (var className in classPool) {
                     objectPoolHeatData.push([objectPoolHeatMapTime.length - 1, classTotal, classPool[className]]);
                     classTotal++;
                 }
