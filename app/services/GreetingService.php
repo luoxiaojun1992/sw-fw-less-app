@@ -18,6 +18,15 @@ class GreetingService extends \SwFwLess\services\GrpcUnaryService implements \Ap
         return $requestMessageClasses[$method] ?? null;
     }
 
+    public function requestMessageName($method)
+    {
+        $requestMessageNames = [
+            'SayHello' => 'request',
+        ];
+
+        return $requestMessageNames[$method] ?? null;
+    }
+
     /**
      * Sends a greeting
      * @param \Demo\HelloRequest $request
