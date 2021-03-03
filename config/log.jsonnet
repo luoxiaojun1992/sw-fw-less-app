@@ -4,6 +4,7 @@
     "level":300,
     "pool_size":100,
     "buffer_max_size":1,
+    "sync_levels": [400],
     "name":"sw-fw-less",
     "reserve_days":1,
     "switch":1
