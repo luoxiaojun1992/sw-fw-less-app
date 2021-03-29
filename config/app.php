@@ -85,4 +85,7 @@ return [
 
     //You can turn off the switch to improve the performance
     'route_di_switch' => \SwFwLess\components\functions\envBool('ROUTE_DI_SWITCH', false),
+
+    //You can turn off the switch to improve the performance
+    'di_switch' => \SwFwLess\components\functions\envBool('DI_SWITCH', true),
 ];
