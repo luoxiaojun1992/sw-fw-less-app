@@ -2,6 +2,7 @@
 
 return [
     'middleware' => [
+//        \SwFwLess\middlewares\Trace::class,
 //        \SwFwLess\components\zipkin\Middleware::class,
 //        \SwFwLess\components\chaos\Middleware::class,
 //        \SwFwLess\middlewares\Cors::class,
