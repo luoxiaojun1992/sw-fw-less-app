@@ -11,6 +11,7 @@ return [
     \SwFwLess\components\chaos\ChaosProvider::class,
 
     //Worker Providers
+    \SwFwLess\components\i18n\Provider::class,
     \SwFwLess\components\time\ntp\Provider::class,
     \SwFwLess\components\pool\Provider::class,
     \SwFwLess\components\utils\math\Provider::class,

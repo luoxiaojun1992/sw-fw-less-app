@@ -18,6 +18,7 @@ return [
         ['GET', '/log', [\SwFwLess\services\DemoService::class, 'log']],
         ['GET', '/zipkin', [\SwFwLess\services\DemoService::class, 'zipkin']],
         ['GET', '/ntp', [\SwFwLess\services\DemoService::class, 'ntp']],
+        ['GET', '/translate', [\SwFwLess\services\DemoService::class, 'translate']],
     ],
     'group' => [
         '/dining' => [
