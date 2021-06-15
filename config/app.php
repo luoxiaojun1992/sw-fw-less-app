@@ -31,7 +31,24 @@ return [
 
     //RateLimit
     'rate_limit' => [
-        'connection' => \SwFwLess\components\functions\env('RATE_LIMIT_CONNECTION', 'rate_limit'),
+        'drivers' => [
+            \SwFwLess\components\ratelimit\RateLimitFactory::ALGORITHM_LEAKY_BUCKET => [
+                'connection' => 'rate_limit',
+                'metric_prefix' => 'rate_limit_metric:',
+            ],
+            \SwFwLess\components\ratelimit\RateLimitFactory::ALGORITHM_ETCD_LEAKY_BUCKET => [
+                'metric_prefix' => 'rate_limit:',
+            ],
+            \SwFwLess\components\ratelimit\RateLimitFactory::ALGORITHM_SLIDING_WINDOW => [
+                'connection' => 'sliding_window',
+                'metric_prefix' => 'sliding_window_metric:',
+                'metric_period_prefix' => 'sliding_window_metric_period:',
+                'metric_window_num_prefix' => 'sliding_window_metric_window_num:',
+            ],
+            \SwFwLess\components\ratelimit\RateLimitFactory::ALGORITHM_MEMORY_USAGE => [
+                //
+            ],
+        ],
     ],
 
     //Cache
