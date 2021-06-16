@@ -48,6 +48,9 @@ return [
             \SwFwLess\components\ratelimit\RateLimitFactory::ALGORITHM_MEMORY_USAGE => [
                 //
             ],
+            \SwFwLess\components\ratelimit\RateLimitFactory::ALGORITHM_SYS_LOAD => [
+                //
+            ],
         ],
     ],
 
