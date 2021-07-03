@@ -14,11 +14,13 @@
         "ext-swoole": ">=4.4.0",
         "ext-json": "*",
         "ext-pdo": "*",
-        "luoxiaojun/sw-fw-less": "dev-master"
+        "luoxiaojun/sw-fw-less": "dev-master",
+        "symfony/translation": "~4.0.0|~5.3.0"
     },
     "suggest": {
         "ext-redis": "*",
-        "ext-curl": "*"
+        "ext-curl": "*",
+        "symfony/translation": "~4.0.0|~5.3.0"
     },
     "license": "apache-2.0",
     "authors": [
