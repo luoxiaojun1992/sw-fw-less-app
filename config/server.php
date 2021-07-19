@@ -16,6 +16,7 @@ $serverConfig = [
     'tcp_fastopen' => \SwFwLess\components\functions\envBool('SERVER_TCP_FASTOPEN', true),
     'max_coroutine' => \SwFwLess\components\functions\envInt('SERVER_MAX_COROUTINE', 3000),
     'open_cpu_affinity' => \SwFwLess\components\functions\envBool('SERVER_OPEN_CPU_AFFINITY', true),
+    'socket_buffer_size' => \SwFwLess\components\functions\envInt('SERVER_SOCKET_BUFFER_SIZE', 2 * 1024 * 1024),
 ];
 
 if (!empty($pidFile = \SwFwLess\components\functions\env('SERVER_PID_FILE'))) {
