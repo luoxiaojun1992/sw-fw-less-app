@@ -136,9 +136,9 @@
 
                 if (objectPoolHeatMapTime.length > maxDataCount) {
                     objectPoolHeatMapTime.shift();
-                    objectPoolHeatData.shift();
-                    objectPoolHeatData.shift();
-                    objectPoolHeatData.shift();
+                    for (var i = 0; i < classTotal; ++i) {
+                        objectPoolHeatData.shift();
+                    }
 
                     for (var i in objectPoolHeatData) {
                         if (i % classTotal == 0) {
