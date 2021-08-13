@@ -20,6 +20,8 @@ return [
         ['GET', '/ntp', [\SwFwLess\services\DemoService::class, 'ntp']],
         ['GET', '/translate', [\SwFwLess\services\DemoService::class, 'translate']],
         ['GET', '/math', [\SwFwLess\services\DemoService::class, 'math']],
+        ['POST', '/postjson', [\SwFwLess\services\DemoService::class, 'postJson']],
+        ['GET', '/volcano', [\SwFwLess\services\DemoService::class, 'volcano']],
     ],
     'group' => [
         '/dining' => [
