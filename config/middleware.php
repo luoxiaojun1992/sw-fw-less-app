@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'switch' => \SwFwLess\components\Helper::envBool('MIDDLEWARE_SWITCH', false),
     'middleware' => [
 //        \SwFwLess\middlewares\Trace::class,
 //        \SwFwLess\components\zipkin\Middleware::class,
