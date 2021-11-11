@@ -10,12 +10,12 @@ return [
             }
         },
     ],
-    \SwFwLess\components\mysql\MysqlPool::EVENT_MYSQL_POOL_CHANGE => [
+    \SwFwLess\components\database\ConnectionPool::EVENT_DB_CONN_POOL_CHANGE => [
         function (\Cake\Event\Event $event) {
             $count = $event->getData('count');
 
-            if (\SwFwLess\components\Config::get('mysql.report_pool_change')) {
-                \SwFwLess\components\swoole\counter\Counter::incr('monitor:pool:mysql', $count);
+            if (\SwFwLess\components\Config::get('database.report_pool_change')) {
+                \SwFwLess\components\swoole\counter\Counter::incr('monitor:pool:db_conn', $count);
             }
         },
     ],

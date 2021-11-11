@@ -20,7 +20,7 @@ return [
     \SwFwLess\components\log\LogProvider::class,
     \SwFwLess\components\ratelimit\RatelimitProvider::class,
     \SwFwLess\components\cache\CacheProvider::class,
-    \SwFwLess\components\mysql\MysqlProvider::class,
+    \SwFwLess\components\database\DatabaseProvider::class,
     \SwFwLess\components\es\EsProvider::class,
     \SwFwLess\components\storage\StorageProvider::class,
     \SwFwLess\components\amqp\AmqpProvider::class,
