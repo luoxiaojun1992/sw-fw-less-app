@@ -24,12 +24,6 @@ return [
         ['GET', '/volcano', [\SwFwLess\services\DemoService::class, 'volcano']],
     ],
     'group' => [
-        '/dining' => [
-            ['GET', '/menu', [\SwFwLess\services\DiningService::class, 'menu']],
-            ['GET', '/ordered', [\SwFwLess\services\DiningService::class, 'ordered', ['auth']]],
-            ['POST', '/order', [\SwFwLess\services\DiningService::class, 'order', ['auth']]],
-            ['POST', '/login', [\SwFwLess\services\DiningService::class, 'login']],
-        ],
         '/demo' => [
             ['POST', '.Greeting/SayHello', [\App\services\GreetingService::class, 'SayHello']],
         ],
