@@ -23,6 +23,9 @@ return [
         ['POST', '/postjson', [\SwFwLess\services\DemoService::class, 'postJson']],
         ['GET', '/volcano', [\SwFwLess\services\DemoService::class, 'volcano']],
     ],
+    'resource' => [
+        ['/resource', \SwFwLess\services\DemoService::class, []],
+    ],
     'group' => [
         '/demo' => [
             ['POST', '.Greeting/SayHello', [\App\services\GreetingService::class, 'SayHello']],
