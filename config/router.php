@@ -22,6 +22,7 @@ return [
         ['GET', '/math', [\SwFwLess\services\DemoService::class, 'math']],
         ['POST', '/postjson', [\SwFwLess\services\DemoService::class, 'postJson']],
         ['GET', '/volcano', [\SwFwLess\services\DemoService::class, 'volcano']],
+        ['GET', '/node-time-offset', [\SwFwLess\services\DemoService::class, 'nodeTimeOffset']],
     ],
     'resource' => [
         ['/resource', \SwFwLess\services\DemoService::class, []],

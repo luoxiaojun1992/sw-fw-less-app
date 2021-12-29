@@ -108,4 +108,6 @@ return [
 
     //You can turn off the switch to improve the performance
     'di_switch' => \SwFwLess\components\functions\envBool('DI_SWITCH', true),
+
+    'time_api_switch' => \SwFwLess\components\functions\envBool('TIME_API_SWITCH', false),
 ];
