@@ -26,9 +26,16 @@ return [
     'resource' => [
         ['/resource', \SwFwLess\services\DemoService::class, []],
     ],
+    'grpc' => [
+        'demo' => [
+            'Greeting' => [
+                'SayHello' => [\App\services\GreetingService::class, []]
+            ]
+        ]
+    ],
     'group' => [
-        '/demo' => [
-            ['POST', '.Greeting/SayHello', [\App\services\GreetingService::class, 'SayHello']],
-        ],
+//        '/demo' => [
+//            ['POST', '.Greeting/SayHello', [\App\services\GreetingService::class, 'SayHello']],
+//        ],
     ],
 ];
